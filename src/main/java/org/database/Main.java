@@ -46,7 +46,9 @@ public class Main {
                     "FROM countries" +
                     "JOIN regions ON countries.region_id = regions.region_id" +
                     "JOIN continents ON regions.continent_id = continents.continent_id" +
-                    "ORDER BY countries.name" + "FROM countries where name like ?";
+                    "FROM countries where name like "%" stringadiricerca "%" +
+                    "ORDER BY countries.name"
+            
             try(PreparedStatement ps = connection.prepareStatement(query)){
                 ps.setString(1,"%"+ stringadiricerca + "%");
             }
