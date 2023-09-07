@@ -1,9 +1,6 @@
 package org.database;
 
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,11 +8,19 @@ public class Main {
 
         String URL = "jdbc:mysql://localhost: 3306/ Db_nations";
         String username = "root";
-        String password;
+        String password= "";
+
+        //query da eseguire
+        String SQL = "SELECT countries.name AS country_name, country_id AS country_id, regions.name  AS regions_name, continents.name AS continents_name" +
+        "FROM countries" +
+        "JOIN regions ON countries.region_id = regions.region_id" +
+        "JOIN continents ON regions.continent_id = continents.continent_id" +
+        "ORDER BY countries.name" ;
+
 
 
         try (Connection connection = DriverManager.getConnection(URL, username, password)) {
-            try (PreparedStatement ps = connection.createStatement()) {
+            try (PreparedStatement ps = connection.prepareStatement(SQL)) {
 
                 try (ResultSet rs = ps.executeQuery()) {
                     //itero
